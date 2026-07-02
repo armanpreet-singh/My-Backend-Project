@@ -1,8 +1,8 @@
 // require('dotenv').config({path : './env'})
 
-
-import { DB_NAME } from "./constants";
-import connectDB from "./db";
+import dotenv from "dotenv"
+import { DB_NAME } from "./constants.js";
+import connectDB from "./db/index.js";
 
 
 dotenv.config({path : './env'})
