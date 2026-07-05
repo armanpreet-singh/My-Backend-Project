@@ -1,6 +1,8 @@
 import { json } from "express"
 
-const asyncHandler = (requestHandler)=>{}
+const asyncHandler = (requestHandler)=>{
+    
+}
 
 
 
