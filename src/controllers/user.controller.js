@@ -3,7 +3,7 @@ import {ApiError} from "../utils/ApiError.js"
 import {User} from "../models/users.model.js"
 import {uploadOnCloudinary} from "../utils/cloudinary.js"
 import { ApiRespone } from "../utils/ApiResponse.js"
-import { useEffect } from "react"
+
 
 
 const registerUser = asyncHandler(async (req,res)=>{
