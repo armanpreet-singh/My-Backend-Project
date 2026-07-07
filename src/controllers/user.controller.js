@@ -24,7 +24,7 @@ if([fullName, email, username, password].some((field)=>field?.trim()==="")){
     throw new ApiError(400,"All Fields Are Required")
 }
 
-const existedUser = User.findOne({
+const existedUser = await User.findOne({
     $or : [{username},{email    }]
 })
 
