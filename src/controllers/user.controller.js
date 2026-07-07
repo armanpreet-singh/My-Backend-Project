@@ -32,6 +32,34 @@ if(existedUser){
     throw new ApiError(409,"User With email or username already exists")
 }
 
+const avatarlocalPath = req.files?.avatar[0]?.path
+const coverImagelocalPath = req.files?.coverImage[0]?.path
+
+if(!avatarlocalPath){
+    throw new ApiError(400,"Avatar File Is Required")
+}
+
+
+const user = await User.create({
+    fullName,
+    avatar: avatar.url,
+    coverImage: coverImage?.url || "",
+    email,
+    password,
+    username: username.toLowerCase()
+})
+
+const createdUser = await User.findById(user._id).select(
+    "-passowrd -refreshToken"
+)
+
+if(!createdUser){
+     throw new ApiError(500,"Something Went Wrong While Registring The User")
+}
+
+return res.status(201).json(
+    new ApiRespone(200,createdUser,"✅  User Created Successfully")
+)
 
 })
 
