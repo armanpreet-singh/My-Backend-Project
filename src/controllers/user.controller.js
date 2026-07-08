@@ -19,7 +19,7 @@ const generateAccessAndRefreshTokens = async(userId)=>
     } catch (error) {
 
         throw new ApiError(500,"Something Went Wrong While Generating Tokens.")
-            
+
     }
 }
 
@@ -130,8 +130,29 @@ if (!isPasswordValid) {
     throw new ApiError(401, "Invalid User Credentials.");
   }
 
+const {accessToken, refreshToken} =  await generateAccessAndRefreshTokens(user._id)
 
+const loggedInUser = await User.findById(user._id).
+select("-password -refreshToken")
 
+const options = {
+    httpOnly : true,
+    secure : true
+}
+
+return res
+.status(200)   
+.cookie("accessToken", accessToken, options)
+.cookie("refreshToken", refreshToken, options)
+.json(
+    new ApiRespone(
+        200,
+        {
+            user : loggedInUser, accessToken, refreshToken
+        },
+        "💹  User Logged In Successfully."
+    )
+)
 
 
 });
