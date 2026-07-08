@@ -4,6 +4,30 @@ import { User } from "../models/users.model.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
 import { ApiRespone } from "../utils/ApiResponse.js";
 
+const generateAccessAndRefreshTokens = async(userId)=>
+{
+     try {
+     const user = await User.findById(userId)
+     const accessToken = user.generateAccessToken()
+     const refreshToken = user.generateRefreshToken()
+    
+     user.refreshToken = refreshToken
+     await user.save({validateBeforesave : false})
+
+     return {accessToken,refreshToken}
+
+    } catch (error) {
+
+        throw new ApiError(500,"Something Went Wrong While Generating Tokens.")
+            
+    }
+}
+
+
+
+
+
+
 const registerUser = asyncHandler(async (req, res) => {
   // Get User Details From Frontend.
   // Validation Checks - Not Empty
