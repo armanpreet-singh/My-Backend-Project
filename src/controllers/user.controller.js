@@ -248,7 +248,12 @@ await user.save({validateBeforesave : false})
 return res
 .status(200)
 .json(new ApiRespone(200, {}, "Password Changes Successfully"))
+})
 
+const getCurrentUser = asyncHandler(async(req, res)=>{
+return res
+.status(200)
+.json(200, req.user, "Current User Fetched Successfully")
 })
 
 export { registerUser,
