@@ -4,6 +4,8 @@ import { User } from "../models/users.model.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
 import { ApiRespone } from "../utils/ApiResponse.js";
 import jwt from "jsonwebtoken"
+import { MongoAPIError } from "mongodb";
+import { Mongoose } from "mongoose";
 
 
 const generateAccessAndRefreshTokens = async(userId)=>
@@ -414,6 +416,16 @@ return res
   new ApiRespone(200, channel[0], "💹  User Channel Fetched Successfully.")
 )
 
+})
+
+const getWatchHistory = asyncHandler(async(req, res)=>{
+  const user = await User.aggregate([
+    {
+      $match: { 
+        _id : new Mongoose.Types.ObjectId(req.user._id)
+      }
+    }
+  ])
 })
 
 
