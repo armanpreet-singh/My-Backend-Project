@@ -305,6 +305,11 @@ const user = await User.findByIdAndUpdate(
   { new : true }
 ).select("password")
 
+return res
+.status(200)
+.json(
+  new ApiRespone(200, user, "Avatar Updated Successfully.")
+)
 })
 
 const updateUserCoverImage = asyncHandler(async(req, res)=>{
@@ -345,5 +350,6 @@ export { registerUser,
    logoutUser,
    refreshAccessToken,
    updateAcountDetails,
-   updateUserAvatar
+   updateUserAvatar,
+   updateUserCoverImage
   };
