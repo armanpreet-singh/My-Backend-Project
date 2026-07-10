@@ -256,8 +256,33 @@ return res
 .json(200, req.user, "Current User Fetched Successfully")
 })
 
+const updateAcountDetails = asyncHandler(async(req, res)=>{
+
+if(!fullName || !email){
+  throw new ApiError(400, "All Fields Are Required!")
+}
+
+const user = User.findByIdAndDelete(
+  req.user?._id,
+  {
+$set : {
+  fullName,
+  email: email
+}
+  },
+  { new : true }
+
+).select("-password")
+
+return res
+.status(200)
+.json(new ApiRespone(200, user, "Account Details Updated Successfully."))
+
+})
+
 export { registerUser,
    loginUser,
    logoutUser,
-   refreshAccessToken
+   refreshAccessToken,
+   updateAcountDetails
   };
