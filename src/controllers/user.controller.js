@@ -280,6 +280,34 @@ return res
 
 })
 
+const updateUserAvatar = asyncHandler(async(req, res)=>{
+
+const avatarlocalPath = req.file?.path
+
+if(!avatarlocalPath){
+  throw new ApiError(400, "Avatar File Is Missing!")
+}
+
+const avatar = await uploadOnCloudinary(avatarlocalPath)
+
+if(!avatar.url){
+  throw new ApiError(400, "Error While Uploading Avatar")
+}
+
+const user = await User.findByIdAndUpdate( 
+  req.user?._id,
+  {
+    $set : {
+      avatar = avatar.url
+    }
+  },
+
+  { new : true }
+).select("password")
+
+})
+
+
 export { registerUser,
    loginUser,
    logoutUser,
