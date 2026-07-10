@@ -307,10 +307,38 @@ const user = await User.findByIdAndUpdate(
 
 })
 
+const updateUserCoverImage = asyncHandler(async(req, res)=>{
+
+const coverImagelocalPath = req.file?.path
+
+if(!coverImagelocalPath){
+  throw new ApiError(400, "Cover Image File Is Missing!")
+}
+
+const coverImage = await uploadOnCloudinary(coverImagelocalPath)
+
+if(!coverImage.url){
+  throw new ApiError(400, "Error While Uploading Cover Image!")
+}
+
+const user = await User.findByIdAndUpdate( 
+  req.user?._id,
+  {
+    $set : {
+      coverImage = coverImage.url
+    }
+  },
+
+  { new : true }
+).select("password")
+
+})
+
 
 export { registerUser,
    loginUser,
    logoutUser,
    refreshAccessToken,
-   updateAcountDetails
+   updateAcountDetails,
+   updateUserAvatar
   };
