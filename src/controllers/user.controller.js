@@ -332,6 +332,11 @@ const user = await User.findByIdAndUpdate(
   { new : true }
 ).select("password")
 
+return res
+.status(200)
+.json(
+  new ApiRespone(200, user, "Cover Image Updated Successfully.")
+)
 })
 
 
