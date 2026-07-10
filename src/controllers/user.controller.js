@@ -404,6 +404,15 @@ const channel = await User.aggregate([
   }
 ])
 
+if(!channel?.length){
+  throw new ApiError(404, "Channel Doesnot Exist!")
+}
+
+return res
+.status(200)
+.json(
+  new ApiRespone(200, channel[0], "💹  User Channel Fetched Successfully.")
+)
 
 })
 
