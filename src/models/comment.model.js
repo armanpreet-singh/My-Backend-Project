@@ -20,6 +20,6 @@ const commentSchema = new Schema(
     }
 )
 
-videoSchema.plugin(mongooseAggregatePaginate)
+commentSchema.plugin(mongooseAggregatePaginate)
 
 export const Comment = mongoose.model("Comment", commentSchema);
