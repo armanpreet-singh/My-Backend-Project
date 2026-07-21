@@ -47,19 +47,29 @@ This project provides a scalable **RESTful API** for a video-sharing platform fe
 
 ![Database Schema](public/database-schema.png)
 
-### Interactive Database Model
+## Interactive Database Model
 
-https://app.eraser.io/workspace/KO4wgxHPnjGUnnbozKEe?origin=share&diagram=B2QskPe1fUDFA8-6XaOix
+<p align="center">
+  <a href="https://app.eraser.io/workspace/KO4wgxHPnjGUnnbozKEe?origin=share&diagram=B2QskPe1fUDFA8-6XaOix" target="_blank">
+    <img
+      src="https://camo.githubusercontent.com/5f022eb0e0a702f24880941dbedf2e3bc5b8b76c031da3f8a3dd4cbe074cc8ec/68747470733a2f2f6173736574732d676c6f62616c2e776562736974652d66696c65732e636f6d2f3632643538613332336362633339366630366137383061612f3635313539333738306162666163343338626333373134395f4c6f676f2532304d61726b2532302532422532304e616d652e737667"
+      alt="Open in Eraser"
+      width="180"
+    />
+  </a>
+</p>
+
+Click the Eraser logo above to explore the interactive database model.
 
 The ER diagram illustrates the relationships between:
 
-* Users
-* Videos
-* Comments
-* Likes
-* Tweets
-* Playlists
-* Subscriptions
+- Users
+- Videos
+- Comments
+- Likes
+- Tweets
+- Playlists
+- Subscriptions
 
 ---
 
