@@ -49,7 +49,7 @@ This project provides a scalable **RESTful API** for a video-sharing platform fe
 
 ### Interactive Database Model
 
-[https://app.eraser.io/workspace/KQKkCyub7XgUbc0tLFLe?origin=share](https://app.eraser.io/workspace/KQKkCyub7XgUbc0tLFLe?origin=share&diagram=B2QskPe1fUDFA8-6XaOix)
+https://app.eraser.io/workspace/KO4wgxHPnjGUnnbozKEe?origin=share&diagram=B2QskPe1fUDFA8-6XaOix
 
 The ER diagram illustrates the relationships between:
 
