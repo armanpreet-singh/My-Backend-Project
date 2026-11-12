@@ -3,6 +3,7 @@ import { ApiError } from "../utils/ApiError.js";
 import { User } from "../models/users.model.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
 import { ApiRespone } from "../utils/ApiResponse.js";
+import { savePasswordAndRevokeRefreshToken } from "../utils/session.js";
 import jwt from "jsonwebtoken"
 
 
@@ -27,9 +28,6 @@ const generateAccessAndRefreshTokens = async(userId)=>
 
     }
 }
-
-
-
 
 
 
@@ -115,7 +113,6 @@ const registerUser = asyncHandler(async (req, res) => {
 const loginUser = asyncHandler(async (req, res) => {
   // Req Body --> Data.
   // Username Or Email.
-  // Find The User.
   // Password Check.
   // Access And Refresh Token.
   // Send Cookie.
@@ -161,7 +158,7 @@ return res
     new ApiRespone(
         200,
         {
-            user : loggedInUser, accessToken, refreshToken
+            user : loggedInUser
         },
         "💹  User Logged In Successfully."
     )
@@ -263,12 +260,24 @@ const changeCurrentPassword = asyncHandler(async (req, res) => {
     throw new ApiError(400, "Old Password Incorrect");
   }
 
-  user.password = newPassword;
-  await user.save({ validateBeforeSave: false });
+  await savePasswordAndRevokeRefreshToken(user, newPassword);
+
+  const cookieOptions = {
+    httpOnly: true,
+    secure: true,
+  };
 
   return res
     .status(200)
-    .json(new ApiRespone(200, {}, "Password Changes Successfully"));
+    .clearCookie("accessToken", cookieOptions)
+    .clearCookie("refreshToken", cookieOptions)
+    .json(
+      new ApiRespone(
+        200,
+        {},
+        "Password changed successfully. Please log in again."
+      )
+    );
 });
 
 const getCurrentUser = asyncHandler(async (req, res) => {
