@@ -197,8 +197,7 @@ return res
 })
 
 const refreshAccessToken = asyncHandler(async(req, res)=>{
-  const incomingRefreshToken = req.cookies.
-  refreshToken || req.body.refreshToken
+  const incomingRefreshToken = req.cookies?.refreshToken || req.body?.refreshToken
 
   if(!incomingRefreshToken){
     throw new ApiError(401, "Unauthorised Request!")
@@ -242,24 +241,35 @@ const refreshAccessToken = asyncHandler(async(req, res)=>{
 
 })
 
-const changeCurrentPassword = asyncHandler(async(req, res)=>{
-  const {oldPassword, newPassword} = req.body
+const changeCurrentPassword = asyncHandler(async (req, res) => {
+  const { oldPassword, newPassword } = req.body;
 
-const user = await User.findById(req.user?._id)
-const isPasswordCorrect = await user.
-isPasswordCorrect(oldPassword)
+  if (
+    typeof oldPassword !== "string" ||
+    !oldPassword ||
+    typeof newPassword !== "string" ||
+    !newPassword
+  ) {
+    throw new ApiError(400, "Old and new passwords are required.");
+  }
 
-if(!isPasswordCorrect){
-  throw new ApiError(400, "Old Password Incorrect")
-}
+  const user = await User.findById(req.user?._id);
+  if (!user) {
+    throw new ApiError(404, "User not found.");
+  }
 
-user.password = newPassword
-await user.save({validateBeforesave : false})
+  const isPasswordCorrect = await user.isPasswordCorrect(oldPassword);
+  if (!isPasswordCorrect) {
+    throw new ApiError(400, "Old Password Incorrect");
+  }
 
-return res
-.status(200)
-.json(new ApiRespone(200, {}, "Password Changes Successfully"))
-})
+  user.password = newPassword;
+  await user.save({ validateBeforeSave: false });
+
+  return res
+    .status(200)
+    .json(new ApiRespone(200, {}, "Password Changes Successfully"));
+});
 
 const getCurrentUser = asyncHandler(async (req, res) => {
   return res
