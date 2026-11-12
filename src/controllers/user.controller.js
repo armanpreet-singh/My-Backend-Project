@@ -31,6 +31,9 @@ const generateAccessAndRefreshTokens = async(userId)=>
 
 
 
+
+
+
 const registerUser = asyncHandler(async (req, res) => {
   // Get User Details From Frontend.
   // Validation Checks - Not Empty
@@ -113,6 +116,7 @@ const registerUser = asyncHandler(async (req, res) => {
 const loginUser = asyncHandler(async (req, res) => {
   // Req Body --> Data.
   // Username Or Email.
+  // Find The User.
   // Password Check.
   // Access And Refresh Token.
   // Send Cookie.
@@ -158,7 +162,7 @@ return res
     new ApiRespone(
         200,
         {
-            user : loggedInUser
+            user : loggedInUser, accessToken, refreshToken
         },
         "💹  User Logged In Successfully."
     )
