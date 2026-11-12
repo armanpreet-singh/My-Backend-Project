@@ -1,10 +1,12 @@
-name: Backend Syntax Check
+name: Backend Syntax and Auth Tests
 
 on:
   pull_request:
     paths:
       - "src/controllers/user.controller.js"
       - "src/routes/user.routes.js"
+      - "src/utils/**"
+      - "tests/**"
       - "package.json"
       - "package-lock.json"
       - ".github/workflows/**"
@@ -13,7 +15,7 @@ on:
       - main
 
 jobs:
-  syntax-check:
+  syntax-and-auth-tests:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
@@ -30,3 +32,6 @@ jobs:
 
       - name: Check authentication and profile modules
         run: npm run check
+
+      - name: Run auth regression tests
+        run: npm test
